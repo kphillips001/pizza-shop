@@ -21,9 +21,6 @@ function App() {
      <Navbar />
      <Banner />
      <Menu />
-      <div>
-        Hello Pizza-shop
-      </div>
     </>
   );
 }
