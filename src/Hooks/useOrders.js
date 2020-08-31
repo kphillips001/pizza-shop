@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useOrders() {
   const [orders, setOrders] = useState([]);
@@ -7,4 +7,3 @@ export function useOrders() {
     setOrders
   };
 }
-

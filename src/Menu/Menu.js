@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { foods } from '../Data/FoodData';
-import {Food, FoodGrid, FoodLabel} from './FoodGrid';
+import { Food, FoodGrid, FoodLabel } from './FoodGrid';
 
 const MenuStyled = styled.div`
   height: 1000px;
