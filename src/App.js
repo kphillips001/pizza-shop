@@ -16,6 +16,7 @@ function App() {
      <GlobalStyle />    
      <FoodDialog openFood={openFood} setOpenFood={setOpenFood}/>
      <Navbar />
+     <Order />
      <Banner />
      <Menu setOpenFood={setOpenFood} />
     </>
