@@ -9,7 +9,6 @@ const ToppingCheckbox = styled.input`
   margin-right: 10px;
   cursor: pointer;
 `
-
 const CheckboxLabel = styled.div `
   cursor: pointer;
 `

@@ -7,7 +7,9 @@ import { formatPrice } from '../Data/FoodData';
 import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../Hooks/useQuantity';
 import { Toppings } from './Toppings';
-import {useToppings} from '../Hooks/useToppings';
+import { useToppings } from '../Hooks/useToppings';
+import { useChoice } from '../Hooks/useChoice';
+import { Choices } from './Choices';
 
 const Dialog = styled.div `
   width: 500px;
@@ -31,16 +33,24 @@ export const DialogFooter = styled.div `
   display: flex;
   justify-content: center;
 `
-export const ConfirmButton = styled(Title) `
+export const ConfirmButton = styled(Title)`
   margin: 10px;
   color: white;
+  height: 20px;
   border-radius: 5px;
   padding: 10px;
   text-align: center;
   width: 200px;
-  cursor: pointer; 
-  background-color: ${pizzaRed}
-`
+  cursor: pointer;
+  background-color: ${pizzaRed};
+  ${({ disabled }) =>
+    disabled &&
+    `
+    opacity: .5; 
+    background-color: grey; 
+    pointer-events: none; 
+  `}
+`;
 
 const DialogShadow = styled.div `
   position: fixed;
@@ -51,13 +61,20 @@ const DialogShadow = styled.div `
   opacity: 0.7;
   z-index: 4;
 `
-const DialogBanner = styled.div `
+const DialogBanner = styled.div`
   min-height: 200px;
   margin-bottom: 20px;
-  ${({img}) => `background-image: url(${img});`}
+  ${({ img }) => (img ? `background-image: url(${img});` : `min-height: 75px;`)}
   background-position: center;
   background-size: cover;
 `
+
+const DialogBannerName = styled(FoodLabel)`
+  font-size: 30px;
+  padding: 5px 40px;
+  top: ${({ img }) => (img ? `100px` : `20px`)};
+`
+
 const pricePerTopping = 0.5;
 
 export function getPrice(order) {
@@ -68,12 +85,6 @@ export function getPrice(order) {
   );
 }
 
-
-const DialogBannerName = styled(FoodLabel) `
-  top: 25px;
-  font-size: 20px;
-  padding: 5px 40px;
-`
 function hasToppings(food){
   return food.section === 'Pizza';
 }
@@ -81,6 +92,8 @@ function hasToppings(food){
 function FoodDialogContainer({ openFood, setOpenFood, setOrders, orders }) {
   const quantity = useQuantity(openFood & openFood.quantity)
   const toppings = useToppings(openFood.toppings);
+  const choiceRadio = useChoice(openFood.choice);
+
   function close() {
     setOpenFood()
   }
@@ -88,8 +101,9 @@ function FoodDialogContainer({ openFood, setOpenFood, setOrders, orders }) {
   const order = {
     ...openFood,
     quantity: quantity.value,
-    toppings: toppings.toppings
-  }
+    toppings: toppings.toppings,
+    choice: choiceRadio.value
+  };
  
   function addToOrder() {
     setOrders([...orders, order]);
@@ -105,13 +119,21 @@ function FoodDialogContainer({ openFood, setOpenFood, setOrders, orders }) {
         </DialogBanner>
         <DialogContent>
           <QuantityInput quantity={quantity} />
-          {hasToppings(openFood) && <>
-            <h3> Would you like toppings? </h3>
+          {hasToppings(openFood) && (
+            <>
+              <h3> Would you like toppings? </h3>
               <Toppings {...toppings} />
-          </>}
+            </>
+          )}
+          {openFood.choices && (
+            <Choices openFood={openFood} choiceRadio={choiceRadio} />
+          )}
         </DialogContent>
           <DialogFooter>
-            <ConfirmButton onClick={addToOrder} >
+            <ConfirmButton 
+              onClick={addToOrder} 
+              disabled={openFood.choices && !choiceRadio.value}
+              >
               Add to Order: {formatPrice(getPrice(order))}
             </ConfirmButton>
           </DialogFooter>
