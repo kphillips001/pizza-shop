@@ -23,13 +23,28 @@ const UserStatus = styled.div `
   margin-right: 30px;
 `
 
-export function Navbar() {
+const LoginButton = styled.span `
+  cursor: pointer;
+`
+
+export function Navbar({login, loggedIn, logout}) {
   return <NavbarStyled>
     <Logo>
       Phillips Pizza Place <span role='img' aria-label='phillips pizza place'>🍕</span> 
     </Logo>
     <UserStatus>
-      Test
+      {loggedIn !== "loading" ? (
+        <>
+          👤 {loggedIn ? "Logged in / " : ""}
+          {loggedIn ? (
+            <LoginButton onClick={logout}>Log Out</LoginButton>
+          ) : (
+            <LoginButton onClick={login}>Login / Signup</LoginButton>
+          )}
+        </>
+      ) : (
+        "loading..."
+      )}
     </UserStatus>
   </NavbarStyled>
 }
