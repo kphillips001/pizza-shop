@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const auth = window.firebase.auth();
 const provider = new window.firebase.auth.GoogleAuthProvider();
 
 export function useAuthentication() {
-  const [authentictated, setAuthenticated ] = useState('loading')
-  
-  function login() {
-  auth.signInWithPopup(provider);
+  const [authenticated, setAuthenticated] = useState('loading');
+
+  function login(){
+    auth.signInWithPopup(provider);
   }
 
   function logout() {
     auth
-    .signout()
+    .signOut()
     .then(function() {
-      // Sign-out successful
+      // Sign-out successful.
     })
-    .catch(function(error){
-      // Error 
+    .catch(function(error) {
+      // An error happened.
     });
   }
 
@@ -25,7 +25,7 @@ export function useAuthentication() {
     auth.onAuthStateChanged(function(user){
       if(user){
         setAuthenticated(user);
-      } else {
+      }else{
         setAuthenticated();
       }
     }, function(error){
@@ -33,5 +33,5 @@ export function useAuthentication() {
     });
   }, []);
 
-  return {login, logout, loggedIn: authentictated};
+  return {login, logout, loggedIn: authenticated};
 }
