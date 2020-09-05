@@ -75,7 +75,7 @@ function sendOrder(orders, { email, displayName }) {
   });
 }
 
-export function Order({ orders, setOrders, setOpenFood, login, loggedIn }) {
+export function Order({ orders, setOrders, setOpenFood, login, loggedIn, setOpenOrderDialog }) {
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0);
@@ -147,10 +147,11 @@ export function Order({ orders, setOrders, setOpenFood, login, loggedIn }) {
         </OrderContainer>
         </OrderContent>
         )}
-      <DialogFooter>
+      {orders.length > 0 &&  <DialogFooter>
         <ConfirmButton
           onClick={() => {
             if(loggedIn){
+              setOpenOrderDialog(true)
               sendOrder(orders, loggedIn);
             } else {
               login();
@@ -158,6 +159,6 @@ export function Order({ orders, setOrders, setOpenFood, login, loggedIn }) {
           }}
           
           >Checkout</ConfirmButton>
-      </DialogFooter>
+      </DialogFooter> }
     </OrderStyled>
 )}

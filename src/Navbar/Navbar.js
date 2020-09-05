@@ -33,7 +33,7 @@ export function Navbar({login, loggedIn, logout}) {
   return (
     <NavbarStyled>
       <Logo>
-        Sliceline{" "}
+        Phillips Pizza Shop{" "}
         <span role="img" aria-label="pizza slice">
           🍕
         </span>
