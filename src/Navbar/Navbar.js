@@ -41,7 +41,7 @@ export function Navbar({login, loggedIn, logout}) {
       <UserStatus>
         {loggedIn !== "loading" ? (
           <>
-            👤 {loggedIn ? `Hello ${loggedIn.displayName}.` : ""}
+            👤 {loggedIn ? `Hello ${loggedIn.displayName}/` : ""}
             {loggedIn ? (
               <LoginButton onClick={logout}> Log out </LoginButton>
             ) : (
