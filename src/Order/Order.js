@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { DialogContent, DialogFooter, ConfirmButton } from '../FoodDialog/FoodDialog';
 import { formatPrice } from '../Data/FoodData';
 import { getPrice } from '../FoodDialog/FoodDialog';
+
 const database = window.firebase.database();
 
 const OrderStyled = styled.div `
